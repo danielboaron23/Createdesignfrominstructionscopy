@@ -228,7 +228,7 @@ function Frame14() {
   );
 }
 
-function Component1() {
+function Component1({ onPlaySudoku }: { onPlaySudoku?: () => void }) {
   return (
     <div className="content-stretch flex gap-[20px] items-start justify-end relative shrink-0" data-name="02">
       <div className="bg-white relative rounded-[12px] self-stretch shrink-0 w-[352px]" data-name="Section / Games">
@@ -246,18 +246,23 @@ function Component1() {
           </div>
         </div>
       </div>
-      <div className="bg-white relative rounded-[12px] self-stretch shrink-0 w-[352px]" data-name="Section / Games">
+      <div className="bg-white relative rounded-[12px] self-stretch shrink-0 w-[352px] transition-transform hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)]" data-name="Section / Games">
         <div className="flex flex-col items-center overflow-clip rounded-[inherit] size-full">
           <div className="content-stretch flex flex-col gap-[16px] items-center px-[40px] py-[28px] relative size-full">
             <div className="relative shrink-0 size-[88px]">
               <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgRectangle23} />
             </div>
             <Frame12 />
-            <div className="bg-[#5b5b5b] content-stretch flex gap-[4px] h-[36px] items-center justify-center overflow-clip px-[16px] py-[4px] relative rounded-[3px] shrink-0" data-name="Button">
+            <button
+              type="button"
+              onClick={onPlaySudoku}
+              className="bg-[#5b5b5b] content-stretch flex gap-[4px] h-[36px] items-center justify-center overflow-clip px-[16px] py-[4px] relative rounded-[3px] shrink-0 cursor-pointer transition-colors hover:bg-[#2d2d2d] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#226ee9] focus-visible:ring-offset-2"
+              data-name="Button"
+            >
               <p className="font-['Open_Sans_Hebrew:Bold',sans-serif] leading-[28px] not-italic relative shrink-0 text-[18px] text-center text-white whitespace-nowrap" dir="auto">
                 רוצה לשחק
               </p>
-            </div>
+            </button>
           </div>
         </div>
       </div>
@@ -356,23 +361,23 @@ function Component2() {
   );
 }
 
-function GameMain() {
+function GameMain({ onPlaySudoku }: { onPlaySudoku?: () => void }) {
   return (
     <div className="content-stretch flex flex-col gap-[20px] items-end relative shrink-0 w-[1468px] p-[0px]" data-name="Game_Main">
       <Component />
-      <Component1 />
+      <Component1 onPlaySudoku={onPlaySudoku} />
       <Component2 />
     </div>
   );
 }
 
-function MainListXxl() {
+function MainListXxl({ onPlaySudoku }: { onPlaySudoku?: () => void }) {
   return (
     <div className="content-stretch flex flex-col gap-[28px] items-end relative shrink-0" data-name="Main List XXL">
       <div className="content-stretch flex h-[72px] items-start justify-start relative shrink-0 w-full" data-name="Horizontal Title-Section Page">
         <Frame28 />
       </div>
-      <GameMain />
+      <GameMain onPlaySudoku={onPlaySudoku} />
     </div>
   );
 }
@@ -1080,7 +1085,7 @@ function Bottom() {
   );
 }
 
-function Xxl() {
+function Xxl({ onPlaySudoku }: { onPlaySudoku?: () => void }) {
   return (
     <div className="content-stretch flex flex-col gap-[56px] items-center relative shrink-0" data-name="XXL">
       <div className="h-[52px] overflow-clip relative shrink-0 w-[1600px]" data-name="Masthead">
@@ -1141,7 +1146,7 @@ function Xxl() {
         </div>
       </div>
       <BannerTop />
-      <MainListXxl />
+      <MainListXxl onPlaySudoku={onPlaySudoku} />
       <NewsList />
       <div className="content-stretch flex flex-col h-[362px] items-start relative shrink-0 w-[1472px]" data-name="Outbrain">
         <FullList />
@@ -1151,10 +1156,10 @@ function Xxl() {
   );
 }
 
-export default function SectionGamesXxl() {
+export default function SectionGamesXxl({ onPlaySudoku }: { onPlaySudoku?: () => void } = {}) {
   return (
     <div className="bg-[#f3f3f3] content-stretch flex justify-center items-start relative w-full" data-name="Section- Games - XXL">
-      <Xxl />
+      <Xxl onPlaySudoku={onPlaySudoku} />
     </div>
   );
 }

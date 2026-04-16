@@ -1,14 +1,23 @@
-import SectionGamesXxl from "../imports/SectionGamesXxl";
+import { useEffect, useState } from "react";
+import MobileHome from "./components/MobileHome";
+import SudokuGame from "./components/games/SudokuGame";
 
-// Main app component
+type Page = "home" | "sudoku";
+
 export default function App() {
+  const [page, setPage] = useState<Page>("home");
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+  }, [page]);
+
   return (
     <div
-      dir="rtl"
-      className="min-h-screen bg-[#f3f3f3] overflow-x-auto"
+      className="min-h-dvh bg-[#f3f3f3]"
       style={{ fontFamily: "'Open Sans Hebrew', 'Arial Hebrew', sans-serif" }}
     >
-      <SectionGamesXxl />
+      {page === "home" && <MobileHome onPlaySudoku={() => setPage("sudoku")} />}
+      {page === "sudoku" && <SudokuGame onExit={() => setPage("home")} />}
     </div>
   );
 }
