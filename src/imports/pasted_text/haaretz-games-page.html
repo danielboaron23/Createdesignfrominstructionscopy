@@ -1,0 +1,266 @@
+TASK: Haaretz Games Section Page — Hebrew RTL Web Page
+Create the full games section page for the Haaretz (הארץ) Hebrew news website, including masthead, ad banner, games grid, weekly summary news section, sponsored content row, and footer. All content is in Hebrew and the entire page is right-to-left (RTL).
+
+CONTEXT:
+- Use Case: Hebrew-language news site games section. Readers browse and launch daily word/logic games (Wordle-style, Sudoku, trivia, etc.) from a visually organized card grid.
+- Brand Reference: Haaretz.co.il — editorial Israeli news aesthetic. Clean, content-dense, card-based. Similar structural feel to NYT Games section but with Hebrew RTL typography.
+- Platform: Web, 1600×auto desktop viewport
+- RTL: CRITICAL — all text, layout direction, and flex flows must be right-to-left. Apply `dir="rtl"` on the root. All flex rows use `justify-content: flex-end`. Text is always `text-align: right`.
+
+LAYOUT:
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        MASTHEAD (52px)                                   │
+│  [Search חיפוש] [♿] [🏷]   [הארץ LOGO - centered]   [שלום, עמוס] [☰ ניווט] │
+├─────────────────────────────────────────────────────────────────────────┤
+│                    AD BANNER (970×250px, amber #f7b439)                  │
+│                           centered                                       │
+├─────────────────────────────────────────────────────────────────────────┤
+│  ━━━━ [blue accent bar]                                             RTL  │
+│  משחקים (42px bold)                                                      │
+│                                                                          │
+│  GAMES GRID ROW 1 (4 cards × 352px, gap 20px):                         │
+│  [איזה שיר?] [סיפור כיסוי] [מה הקשר] [5 אותיות]    ← justify-end RTL  │
+│                                                                          │
+│  GAMES GRID ROW 2 (4 cards × 352px, gap 20px, h:308px):                │
+│  [20 שאלות] [סודוקו] [מי אני?] [הגיונית]            ← justify-end RTL  │
+│                                                                          │
+│  GAMES GRID ROW 3 (2 cards × 352px, gap 12px):                         │
+│  [לא לציטוט] [20 שאלות]                              ← justify-end RTL  │
+├─────────────────────────────────────────────────────────────────────────┤
+│  WEEKLY SUMMARY (סיכום שבועי) SECTION:                                  │
+│                                                                          │
+│  Row 1: [Teaser 601px] [Teaser 601px]  [━━ סיכום שבועי title block]    │
+│  Row 2: [Teaser 601px] [Teaser 601px]                                   │
+│  Row 3: [Teaser 601px] [Teaser 601px]                                   │
+├─────────────────────────────────────────────────────────────────────────┤
+│  OUTBRAIN / SPONSORED ROW:                                              │
+│  ━━━━ [blue bar]  מרחבי הרשת                                            │
+│  [Card 353px] [Card 353px] [Card 353px] [Card 353px]                    │
+├─────────────────────────────────────────────────────────────────────────┤
+│                      FOOTER (1920px × 316px, bg #2d2d2d)               │
+│  [הארץ logo white]   ━━━━━━━━━━━━━━━━   [🍎 🤖 💬 📷 𝕏 f social icons]  │
+│  [footer nav links RTL]                                   [הצג עוד btn] │
+│  [footer description + copyright RTL]                                   │
+└─────────────────────────────────────────────────────────────────────────┘
+Total: 1600px wide × auto height
+```
+
+ELEMENTS:
+- [ ] Masthead bar (52px height, transparent bg)
+  - [ ] הארץ logo SVG — absolutely centered
+  - [ ] Right side: "שלום, עמוס" + user icon button + "ניווט" + hamburger icon button
+  - [ ] Left side: accessibility icon + tag icon + "חיפוש" search button with magnifier icon
+- [ ] Top banner: 970×250px amber rectangle (#f7b439), centered
+- [ ] Section title block with blue accent bar (49×16px, #226ee9) above "משחקים"
+- [ ] Games grid: 3 rows of game cards
+  - [ ] Row 1: 4 cards
+  - [ ] Row 2: 4 cards, fixed height 308px
+  - [ ] Row 3: 2 cards (smaller gap 12px)
+- [ ] Each game card: icon (88×88px) + title + subtitle + "רוצה לשחק" button
+- [ ] Weekly summary section title block (vertical, right-aligned): "סיכום שבועי" + blue accent bar (12px height)
+- [ ] 6 news teaser cards (2 per row × 3 rows), each 601×264px
+- [ ] Outbrain/sponsored section title: "מרחבי הרשת" + Outbrain logo
+- [ ] 4 Outbrain sponsored cards (353×294px each)
+- [ ] Footer (1920×316px): logo, social icons, divider, nav links, CTA button, copyright
+
+COMPONENT SPECS:
+
+**Masthead** (1600×52px)
+- Background: transparent (page bg shows through)
+- Logo: הארץ SVG, white/dark wordmark, centered absolutely, ~68px wide
+- Right buttons (RTL start): height 28px, font Open Sans Hebrew Bold 14px #2d2d2d, no bg, border-radius 3px, flex gap 4px (icon + text)
+  - "שלום, עמוס" + user icon 20px
+  - "ניווט" + hamburger icon 20px
+- Left buttons (RTL end): gap 24px between groups
+  - Accessibility icon 20px + tag icon 20px (grouped, 60px total)
+  - "חיפוש" + search icon 20px
+
+**Top Banner** (970×250px)
+- Background: #f7b439 (amber yellow)
+- No border-radius
+- Centered on page
+- Placeholder text: "970x250" in white
+
+**Section Title Block — "משחקים"**
+- Flex column, items-end (RTL right-aligned), gap 4px
+- Accent bar: 49×16px, background #226ee9
+- Title: font Open Sans Hebrew Bold, 42px, line-height 52px, color #2d2d2d, text-right
+
+**Game Card** (352px wide × auto height, min ~308px)
+- Background: #ffffff
+- Border-radius: 12px
+- Padding: 40px horizontal, 28px vertical
+- Layout: flex-col, items-center, gap 16px
+- Game icon: 88×88px image/illustration, centered
+- Title: Open Sans Hebrew Bold, 24px, line-height 32px, #2d2d2d, text-right, dir="rtl", overflow ellipsis, full width
+- Subtitle: Open Sans Hebrew Regular, 21px, line-height 32px, #2d2d2d, text-right, dir="rtl", min-height 56px, overflow ellipsis
+- "רוצה לשחק" Button:
+  - Background: #5b5b5b
+  - Height: 36px, padding: 4px 16px
+  - Border-radius: 3px
+  - Font: Open Sans Hebrew Bold, 18px, line-height 28px, #ffffff, text-center
+
+**News Teaser Card** (601×264px)
+- Background: #ffffff, border-radius 12px
+- Layout: flex-row, justify-end (image on visual right, text on left — RTL)
+- Image section: 352×264px, border-radius 0 12px 12px 0 (right side rounded only)
+- Text section: 249×264px, padding 12px, flex-col, justify-between
+  - Headline: Open Sans Hebrew Bold, 21px, line-height 32px, #2d2d2d, text-right, dir="rtl"
+  - Credit bar (bottom): flex-row, justify-end, gap 4px
+    - Author: 4px bullet dot (#5b5b5b) + name Open Sans Hebrew Regular 12px #5b5b5b
+    - Comment count: Open Sans Hebrew Bold 12px #737373 + chat icon 12×12px
+
+**Weekly Summary Title Block** (vertical, right-side)
+- Width: 163px
+- Accent bar: 49×12px, background #226ee9
+- Title "סיכום שבועי": Open Sans Hebrew Bold, 28px, line-height 36px, #2d2d2d, text-right
+
+**Outbrain Sponsored Card** (353×294px)
+- Background: #f3f3f3, border: 1px solid #e7e7e7, border-radius: 12px
+- Layout: flex-col, items-center, gap 8px, padding-bottom 12px
+- Image: full-width top, height 210px, object-fit cover
+- Category + title text block: padding 0 8px, text-right, dir="rtl"
+  - Category prefix: Arial Hebrew Bold, 21px, color #a30c15 (red)
+  - Title: Arial Hebrew Bold, 21px, color #2d2d2d
+- "ממומן" badge: absolute, top: ~50%+51px from container top, right: 0
+  - Background: #191919, height 24px, padding 0 8px, no border-radius
+  - Font: Arial Regular, 16px, line-height 24px, #ffffff
+
+**Outbrain Section Title**
+- "מרחבי הרשת": Open Sans Hebrew Bold (via Arial Bold), 28px, #2d2d2d, text-right
+- Outbrain logo: left-aligned (RTL: far end), 159×22px
+
+**Footer** (1920×316px)
+- Background: #2d2d2d
+- Content area: 1224px wide, centered
+- Logo הארץ: white SVG, right-anchored, 109px wide
+- Social icons: Apple, Android, WhatsApp, Instagram, X, Facebook — 24×24px each, white, flex-row gap 20px, left-anchored
+- Horizontal divider: at y=140px within footer, full content-width
+- Nav links: Open Sans Hebrew Bold, 18px, #ffffff, text-right, dir="rtl"
+  - "מערכת | הנהלה | אודות הארץ | דרושים | צור קשר | עשה מינוי | שאלות ותשובות | ביטול מינוי דיגיטלי | פרסם אצלנו"
+- "הצג עוד" button: background #226ee9, height 36px, border-radius 3px, Open Sans Hebrew Bold 18px white, left-anchored
+- Description + copyright: Open Sans Hebrew Regular, 14px, line-height 20px, #ffffff, text-right, dir="rtl", width 700px, right-anchored at y=224px
+
+DESIGN SYSTEM:
+
+**Colors**
+| Token | Hex | Usage |
+|-------|-----|-------|
+| Page Background | #f3f3f3 | Full page bg, Outbrain card bg |
+| Card Default | #ffffff | Game cards, news teasers |
+| Card Emphasis | #2d2d2d | Footer |
+| Primary | #226ee9 | Blue accent bars, footer CTA button |
+| Secondary | #a30c15 | Red category labels in Outbrain |
+| Text Primary | #2d2d2d | Headlines, card titles |
+| Text Secondary | #5b5b5b | Subtitles, author names, play button bg |
+| Text Muted | #737373 | Comment counts |
+| Text Dim | #8a8a8a | Decorative/disabled elements |
+| Text Negative | #ffffff | Text on dark backgrounds |
+| Neutral Darkest | #191919 | "ממומן" badge |
+| Border Subtle | #e7e7e7 | Outbrain card borders |
+| Banner Amber | #f7b439 | Top promo banner |
+
+**Typography**
+| Element | Font | Size | Weight | Line Height |
+|---------|------|------|--------|-------------|
+| Section Title (משחקים) | Open Sans Hebrew | 42px | 700 | 52px |
+| Card Title H2 (game title) | Open Sans Hebrew | 24px | 700 | 32px |
+| Section Title H3 (סיכום שבועי) | Open Sans Hebrew | 28px | 700 | 36px |
+| Body Large Regular | Open Sans Hebrew | 21px | 400 | 32px |
+| Body Large Bold | Open Sans Hebrew | 21px | 700 | 32px |
+| Play Button / Outbrain Nav | Open Sans Hebrew | 18px | 700 | 28px |
+| Masthead Buttons | Open Sans Hebrew | 14px | 700 | 20px |
+| Caption Bold | Open Sans Hebrew | 12px | 700 | 20px |
+| Caption Regular | Open Sans Hebrew | 12px | 400 | 20px |
+| Sponsored Badge | Arial | 16px | 400 | 24px |
+
+**Spacing Scale**
+- 4px (xs), 8px (sm), 12px (md), 16px (lg), 20px (xl), 28px (2xl), 40px (3xl), 56px (4xl)
+
+**Border Radius**
+- Cards (game, news, outbrain): 12px
+- Buttons (play, CTA, masthead): 3px
+- "ממומן" badge: 0px (sharp rectangle)
+- News card image (right side only): border-radius 0 12px 12px 0
+
+**Shadows**
+- None on cards (flat design)
+- Outbrain cards use border instead: 1px solid #e7e7e7
+
+BEHAVIOR:
+- **Game card on hover**: Slight elevation or subtle shadow (0 4px 12px rgba(0,0,0,0.08)), 150ms ease
+- **"רוצה לשחק" button on hover**: Background lightens from #5b5b5b to #737373, 150ms ease
+- **News teaser card on hover**: Title text color shifts to #226ee9 (link highlight), 150ms ease
+- **Masthead buttons on hover**: Background #f3f3f3 appears, 150ms ease
+- **"הצג עוד" button on hover**: Background #1a5bc7 (darker blue), 150ms ease
+- **Outbrain card on hover**: Border color shifts to #226ee9, 150ms ease
+- **Transitions**: All interactive elements use `transition: all 150ms ease`
+- **Cursor**: pointer on all clickable cards and buttons
+
+CONSTRAINTS:
+
+| Spec | Value |
+|------|-------|
+| Platform | Web |
+| Viewport | 1600px |
+| Content width | 1468px (games, news, outbrain) |
+| Masthead width | 1600px |
+| Footer width | 1920px |
+| Language | Hebrew |
+| Direction | RTL — `dir="rtl"` on root and all text |
+| Accessibility | WCAG AA, keyboard nav, focus states on all buttons |
+| Font | Open Sans Hebrew (primary), Arial Hebrew (fallback) |
+
+**States Required:**
+- Game card: Default, Hover
+- Play button: Default, Hover, Active
+- News teaser: Default, Hover (headline color shift)
+- Masthead buttons: Default, Hover
+- Footer CTA: Default, Hover
+
+CONTENT:
+
+Games (Row 1):
+1. "איזה שיר?" — "אבודים בתרגום? אפשר לשמוע רמז"
+2. "סיפור כיסוי" — "בכמה צעדים תצליחו למלא את הלוח?"
+3. "מה הקשר" — "חברו ארבע קבוצות של ארבע מילים"
+4. "5 אותיות" — "לא תאמינו כמה מילים בנות 5 אותיות יש בעברית"
+
+Games (Row 2):
+1. "20 שאלות" — "הטקס הקבוע שלכם בפרלמנט שישי"
+2. "סודוקו" — "שלוש שורות, שלושה טורים, שלוש רמות קושי"
+3. "מי אני?" — "התמונה מפוקסלת והדמות לא ברורה. בכמה נסיונות תזהו אותה?"
+4. "הגיונית" — "חידת הגיון מילולית יומית"
+
+Games (Row 3):
+1. "לא לציטוט" — "שלוש שורות, שלושה טורים, שלוש רמות קושי"
+2. "20 שאלות" — "הטקס הקבוע שלכם בפרלמנט שישי"
+
+News Teasers (Weekly Summary):
+1. 'סיכום השבוע במשחקים: ד"ש ממגילת אסתר' — ניצן פינקו — 26 💬
+2. "סיכום השבוע במשחקים: בין בשאר אל-אסד לריקי גל" — ניצן פינקו — 26 💬
+3. "סיכום השבוע במשחקים: הצלחה נאה בסיפור כיסוי, אבל מה יהיה עם מרתה?" — ניצן פינקו — 26 💬
+4. 'סיכום השבוע במשחקים: ידעתם שהחיה שנחה על "סיפור כיסוי" מתחלפת?' — ניצן פינקו — 26 💬
+5. "סיכום השבוע במשחקים: קטשוף וסליחות" — ניצן פינקו — 26 💬
+6. "סיכום השבוע במשחקים: ניר ברקת הוא לא יריב לוין, ואיזה שיא נשבר בניו יורק טיימס?" — ניצן פינקו — 26 💬
+
+Outbrain Sponsored Cards (4 cards, label "ממומן"):
+- Category: "בריאות / " (red) + title: "אפגניסטאן מסתירה את כישלונותיה במלחמה מול הטליבאן"
+
+Footer Nav:
+"מערכת | הנהלה | אודות הארץ | דרושים | צור קשר | עשה מינוי | שאלות ותשובות | ביטול מינוי דיגיטלי | פרסם אצלנו"
+
+Footer Legal:
+"חדשות, ידיעות מהארץ והעולם - הידיעות והחדשות בעיתון הארץ. סקופים, מאמרים, פרשנויות ותחקירי עומק באתר האיכותי בישראל"
+'© כל הזכויות שמורות להוצאת עיתון הארץ בע"מ'
+
+NOTES:
+1. ⚠️ RTL IS CRITICAL: Apply `dir="rtl"` to the root element and to every text element. Every flex row must default to `justify-content: flex-end`. Images in news teasers appear on the visual right side — this is correct for RTL.
+2. The masthead logo הארץ must be absolutely centered — not offset by the RTL flex direction.
+3. News teaser image border-radius: only the right side is rounded (`border-radius: 0 12px 12px 0`) because image is on the right side of the card in RTL layout.
+4. Outbrain "ממומן" badge is absolutely positioned on the right edge of the card, vertically centered at the image/text boundary.
+5. The games grid Row 3 uses a gap of 12px (not 20px like rows 1 and 2) — it's a partial row with only 2 cards.
+6. The footer is wider than the content (1920px vs 1600px) — allow it to bleed full-width.
+7. Use placeholder colored rectangles for game card icons and news images where real assets aren't available.
+8. The section "סיכום שבועי" title block is placed to the right of Row 1 of the news teasers (not above) — it acts as a side label in the first row.
