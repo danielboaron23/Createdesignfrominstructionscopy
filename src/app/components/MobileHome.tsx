@@ -1,6 +1,7 @@
 import NewsSection from "./NewsSection";
-import RecommendedSection from "./RecommendedSection";
+import RecommendedCarousel from "./RecommendedCarousel";
 import SiteFooter from "./SiteFooter";
+import type { GameId } from "../App";
 import imgRectangle18 from "figma:asset/b468fe1f59c2ed9c7ef3a2cab4fd006d08cfa2ad.png";
 import imgRectangle19 from "figma:asset/c8f494e6316c0a5254f99b0601bd4324a561c8e0.png";
 import imgRectangle20 from "figma:asset/581b66b1cffde581028a271bd3a9bdbf5296fe44.png";
@@ -11,32 +12,98 @@ import imgRectangle24 from "figma:asset/64bac39cbebe016b41d28d7deb8d47c97bf0417d
 import imgRectangle25 from "figma:asset/d072cf7f47e03e6e12c5ba7c5426e6f606d9c968.png";
 import imgRectangle26 from "figma:asset/899e148af0dc83343a399c3eca87404e530a278f.png";
 
-type GameId = "sudoku" | "other";
-
 type Game = {
   id: GameId;
   title: string;
   subtitle: string;
   image: string;
+  /** Accent color sampled from the icon — used for the hover-reveal overlay */
+  accent: string;
+  /** Darker shade of the accent for readable text on the overlay */
+  accentText: string;
 };
 
 const GAMES: Game[] = [
-  { id: "other", title: "איזה שיר?", subtitle: "אבודים בתרגום? אפשר לשמוע רמז", image: imgRectangle18 },
-  { id: "other", title: "סיפור כיסוי", subtitle: "בכמה צעדים תצליחו למלא את הלוח?", image: imgRectangle19 },
-  { id: "other", title: "מה הקשר", subtitle: "חברו ארבע קבוצות של ארבע מילים", image: imgRectangle20 },
-  { id: "other", title: "5 אותיות", subtitle: "לא תאמינו כמה מילים בנות 5 אותיות יש בעברית", image: imgRectangle21 },
-  { id: "other", title: "20 שאלות", subtitle: "הטקס הקבוע שלכם בפרלמנט שישי", image: imgRectangle22 },
-  { id: "sudoku", title: "סודוקו", subtitle: "שלוש שורות, שלושה טורים, שלוש רמות קושי", image: imgRectangle23 },
-  { id: "other", title: "מי אני?", subtitle: "התמונה מפוקסלת והדמות לא ברורה. בכמה נסיונות תזהו אותה?", image: imgRectangle24 },
-  { id: "other", title: "הגיונית", subtitle: "חידת הגיון מילולית יומית", image: imgRectangle25 },
-  { id: "other", title: "לא לציטוט", subtitle: "שלוש שורות, שלושה טורים, שלוש רמות קושי", image: imgRectangle26 },
+  {
+    id: "which-song",
+    title: "איזה שיר?",
+    subtitle: "אבודים בתרגום? אפשר לשמוע רמז",
+    image: imgRectangle18,
+    accent: "#d8d4f5",
+    accentText: "#2d2d2d",
+  },
+  {
+    id: "cover-story",
+    title: "סיפור כיסוי",
+    subtitle: "בכמה צעדים תצליחו למלא את הלוח?",
+    image: imgRectangle19,
+    accent: "#f0e4db",
+    accentText: "#2d2d2d",
+  },
+  {
+    id: "connections",
+    title: "מה הקשר",
+    subtitle: "חברו ארבע קבוצות של ארבע מילים",
+    image: imgRectangle20,
+    accent: "#fff3c2",
+    accentText: "#2d2d2d",
+  },
+  {
+    id: "five-letters",
+    title: "5 אותיות",
+    subtitle: "לא תאמינו כמה מילים בנות 5 אותיות יש בעברית",
+    image: imgRectangle21,
+    accent: "#cddc9a",
+    accentText: "#2d2d2d",
+  },
+  {
+    id: "twenty-questions",
+    title: "20 שאלות",
+    subtitle: "הטקס הקבוע שלכם בפרלמנט שישי",
+    image: imgRectangle22,
+    accent: "#bfd4f9",
+    accentText: "#1a3a7a",
+  },
+  {
+    id: "sudoku",
+    title: "סודוקו",
+    subtitle: "שלוש שורות, שלושה טורים, שלוש רמות קושי",
+    image: imgRectangle23,
+    accent: "#b6d9b8",
+    accentText: "#1a3a1a",
+  },
+  {
+    id: "who-am-i",
+    title: "מי אני?",
+    subtitle: "התמונה מפוקסלת והדמות לא ברורה. בכמה נסיונות תזהו אותה?",
+    image: imgRectangle24,
+    accent: "#f7d96b",
+    accentText: "#3a2f00",
+  },
+  {
+    id: "logical",
+    title: "הגיונית",
+    subtitle: "חידת הגיון מילולית יומית",
+    image: imgRectangle25,
+    accent: "#f5c9cc",
+    accentText: "#3a1a1f",
+  },
+  {
+    id: "not-for-quoting",
+    title: "לא לציטוט",
+    subtitle: "שלוש שורות, שלושה טורים, שלוש רמות קושי",
+    image: imgRectangle26,
+    accent: "#f0b8b8",
+    accentText: "#3a1a1f",
+  },
 ];
 
 type Props = {
-  onPlaySudoku: () => void;
+  onPlay: (id: GameId) => void;
+  onOpenArticle: (id: string) => void;
 };
 
-export default function MobileHome({ onPlaySudoku }: Props) {
+export default function MobileHome({ onPlay, onOpenArticle }: Props) {
   return (
     <div
       dir="rtl"
@@ -113,67 +180,137 @@ export default function MobileHome({ onPlaySudoku }: Props) {
             <GameCard
               key={i}
               game={game}
-              onPlay={game.id === "sudoku" ? onPlaySudoku : undefined}
+              onPlay={() => onPlay(game.id)}
             />
           ))}
         </div>
       </section>
 
       {/* News / weekly summary */}
-      <NewsSection />
+      <NewsSection onOpenArticle={onOpenArticle} />
 
-      {/* Recommended / Outbrain */}
-      <RecommendedSection />
+      {/* Recommended / Outbrain (animated coverflow carousel) */}
+      <RecommendedCarousel />
 
       {/* Footer */}
       <SiteFooter />
+
+      {/* Hover-reveal animation — circle clip-path expands from the icon position */}
+      <style>{`
+        .game-card-overlay {
+          clip-path: circle(0 at 50% 22%);
+          -webkit-clip-path: circle(0 at 50% 22%);
+          transition: clip-path 0.7s cubic-bezier(0.76, 0, 0.24, 1),
+                      -webkit-clip-path 0.7s cubic-bezier(0.76, 0, 0.24, 1);
+          will-change: clip-path;
+        }
+        .game-card:hover .game-card-overlay,
+        .game-card:focus-within .game-card-overlay {
+          clip-path: circle(140% at 50% 22%);
+          -webkit-clip-path: circle(140% at 50% 22%);
+          /* NOTE: keep pointer-events: none so clicks fall through to the
+             real (base-layer) button underneath. Without this, the overlay
+             catches clicks and nothing happens. */
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .game-card-overlay {
+            transition: opacity 0.2s ease;
+            clip-path: none;
+            -webkit-clip-path: none;
+            opacity: 0;
+          }
+          .game-card:hover .game-card-overlay,
+          .game-card:focus-within .game-card-overlay {
+            opacity: 1;
+          }
+        }
+      `}</style>
     </div>
   );
 }
 
 function GameCard({ game, onPlay }: { game: Game; onPlay?: () => void }) {
   const isActive = !!onPlay;
+
+  // Inner card content is rendered twice: once as the base layer (white),
+  // and once as the overlay (accent color). The overlay is clipped to a
+  // small circle at the icon position and expands to cover the whole card
+  // on hover/focus via a CSS clip-path transition.
+  const renderContent = (variant: "base" | "overlay") => {
+    const isOverlay = variant === "overlay";
+    const textColor = isOverlay ? game.accentText : "#2d2d2d";
+    return (
+      <div className="h-full w-full px-3 py-4 sm:p-5 md:p-6 flex flex-col items-center gap-3 sm:gap-4">
+        <div className="w-[68px] h-[68px] sm:w-[80px] sm:h-[80px] md:w-[88px] md:h-[88px] shrink-0">
+          <img
+            src={game.image}
+            alt=""
+            className="w-full h-full object-cover"
+            loading="lazy"
+            width="88"
+            height="88"
+            draggable={false}
+          />
+        </div>
+        <div className="w-full flex flex-col items-center text-center gap-[2px]">
+          <h3
+            className="font-bold text-[17px] sm:text-[20px] md:text-[22px] leading-[1.25]"
+            style={{ color: textColor }}
+            dir="rtl"
+          >
+            {game.title}
+          </h3>
+          <p
+            className="font-normal text-[12px] sm:text-[14px] md:text-[15px] leading-[1.4] min-h-[34px] sm:min-h-[40px] md:min-h-[42px]"
+            style={{ color: textColor, opacity: isOverlay ? 0.85 : 1 }}
+            dir="rtl"
+          >
+            {game.subtitle}
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={isOverlay ? undefined : onPlay}
+          disabled={!isActive}
+          tabIndex={isOverlay ? -1 : 0}
+          aria-hidden={isOverlay}
+          className={
+            "min-h-[44px] w-full sm:w-auto px-5 rounded-[6px] text-[14px] sm:text-[15px] md:text-[16px] font-bold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#226ee9] focus-visible:ring-offset-2 " +
+            (!isActive
+              ? "bg-[#c4c4c4] text-white cursor-not-allowed"
+              : isOverlay
+              ? "bg-[#2d2d2d] text-white cursor-pointer"
+              : "bg-[#5b5b5b] text-white hover:bg-[#2d2d2d] active:bg-[#2d2d2d] cursor-pointer")
+          }
+          aria-label={isActive ? `שחק ${game.title}` : `${game.title} — בקרוב`}
+        >
+          {isActive ? "רוצה לשחק" : "בקרוב"}
+        </button>
+      </div>
+    );
+  };
+
   return (
     <article
-      className={
-        "bg-white rounded-[12px] px-3 py-4 sm:p-5 md:p-6 flex flex-col items-center gap-3 sm:gap-4 transition-all " +
-        (isActive
-          ? "hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)]"
-          : "")
+      className="game-card group relative bg-white rounded-[12px] overflow-hidden transition-all duration-300 focus-within:-translate-y-[2px] hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(0,0,0,0.1)]"
+      style={
+        {
+          "--accent": game.accent,
+        } as React.CSSProperties
       }
     >
-      <div className="w-[68px] h-[68px] sm:w-[80px] sm:h-[80px] md:w-[88px] md:h-[88px] shrink-0">
-        <img
-          src={game.image}
-          alt=""
-          className="w-full h-full object-cover"
-          loading="lazy"
-          width="88"
-          height="88"
-        />
-      </div>
-      <div className="w-full flex flex-col items-center text-center gap-[2px]">
-        <h3 className="font-bold text-[#2d2d2d] text-[17px] sm:text-[20px] md:text-[22px] leading-[1.25]" dir="rtl">
-          {game.title}
-        </h3>
-        <p className="font-normal text-[#2d2d2d] text-[12px] sm:text-[14px] md:text-[15px] leading-[1.4] min-h-[34px] sm:min-h-[40px] md:min-h-[42px]" dir="rtl">
-          {game.subtitle}
-        </p>
-      </div>
-      <button
-        type="button"
-        onClick={onPlay}
-        disabled={!isActive}
-        className={
-          "min-h-[44px] w-full sm:w-auto px-5 rounded-[6px] text-white text-[14px] sm:text-[15px] md:text-[16px] font-bold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#226ee9] focus-visible:ring-offset-2 " +
-          (isActive
-            ? "bg-[#5b5b5b] hover:bg-[#2d2d2d] active:bg-[#2d2d2d] cursor-pointer"
-            : "bg-[#c4c4c4] cursor-not-allowed")
-        }
-        aria-label={isActive ? `שחק ${game.title}` : `${game.title} — בקרוב`}
+      {/* Base layer */}
+      <div className="relative z-0">{renderContent("base")}</div>
+
+      {/* Overlay layer — clipped to a small circle at the icon center-top,
+          expands to cover the full card on hover/focus */}
+      <div
+        aria-hidden="true"
+        className="game-card-overlay absolute inset-0 z-10 pointer-events-none"
+        style={{ backgroundColor: game.accent }}
       >
-        {isActive ? "רוצה לשחק" : "בקרוב"}
-      </button>
+        {renderContent("overlay")}
+      </div>
     </article>
   );
 }

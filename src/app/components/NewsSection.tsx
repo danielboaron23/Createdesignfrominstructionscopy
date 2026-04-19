@@ -1,57 +1,10 @@
-import imgRectangle2 from "figma:asset/734a2e522d4d80b55bfa8930990722566a35544a.png";
-import imgRectangle3 from "figma:asset/752143c87f5aa0ff57750945a7936786784b74d9.png";
-import imgRectangle4 from "figma:asset/1756e49d365b8988d28cb418bb75c13085be2df9.png";
-import imgRectangle5 from "figma:asset/95a5f39cb014c72bfcc06474d8a002863a68561e.png";
-import imgRectangle6 from "figma:asset/3b6d2b2e8f979034d19c6ccc948c7849579b8adf.png";
-import imgRectangle7 from "figma:asset/f61f12346f3d30f50a807a55154593765b83e1a9.png";
+import { ARTICLES } from "./articles";
 
-type NewsItem = {
-  title: string;
-  image: string;
-  author: string;
-  comments: number;
+type Props = {
+  onOpenArticle: (id: string) => void;
 };
 
-const NEWS: NewsItem[] = [
-  {
-    title: 'סיכום השבוע במשחקים: ד"ש ממגילת אסתר',
-    image: imgRectangle2,
-    author: "ניצן פינקו",
-    comments: 26,
-  },
-  {
-    title: "סיכום השבוע במשחקים: בין בשאר אל-אסד לריקי גל",
-    image: imgRectangle3,
-    author: "ניצן פינקו",
-    comments: 26,
-  },
-  {
-    title: 'סיכום השבוע במשחקים: ידעתם שהחיה שנחה על "סיפור כיסוי" מתחלפת?',
-    image: imgRectangle4,
-    author: "ניצן פינקו",
-    comments: 26,
-  },
-  {
-    title: "סיכום השבוע במשחקים: הצלחה נאה בסיפור כיסוי, אבל מה יהיה עם מרתה?",
-    image: imgRectangle5,
-    author: "ניצן פינקו",
-    comments: 26,
-  },
-  {
-    title: "סיכום השבוע במשחקים: קטשוף וסליחות",
-    image: imgRectangle6,
-    author: "ניצן פינקו",
-    comments: 26,
-  },
-  {
-    title: "סיכום השבוע במשחקים: ניר ברקת הוא לא יריב לוין, ואיזה שיא נשבר בניו יורק טיימס?",
-    image: imgRectangle7,
-    author: "ניצן פינקו",
-    comments: 26,
-  },
-];
-
-export default function NewsSection() {
+export default function NewsSection({ onOpenArticle }: Props) {
   return (
     <section className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10">
       {/* Section title — aligned to RIGHT in RTL */}
@@ -64,23 +17,41 @@ export default function NewsSection() {
 
       {/* Grid of 6 news cards: 1 col mobile, 2 col tablet+ */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-5">
-        {NEWS.map((item, i) => (
-          <NewsCard key={i} item={item} />
+        {ARTICLES.map((item) => (
+          <NewsCard key={item.id} item={item} onOpen={() => onOpenArticle(item.id)} />
         ))}
       </div>
     </section>
   );
 }
 
-function NewsCard({ item }: { item: NewsItem }) {
+function NewsCard({
+  item,
+  onOpen,
+}: {
+  item: (typeof ARTICLES)[number];
+  onOpen: () => void;
+}) {
   return (
-    <article className="bg-white rounded-[12px] overflow-hidden flex items-stretch h-[180px] sm:h-[220px] lg:h-[264px] transition-all hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)] cursor-pointer">
+    <article
+      onClick={onOpen}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onOpen();
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      aria-label={`פתח כתבה: ${item.title}`}
+      className="bg-white rounded-[12px] overflow-hidden flex items-stretch h-[180px] sm:h-[220px] lg:h-[264px] transition-all hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#226ee9] focus-visible:ring-offset-2"
+    >
       {/* Image on the RIGHT (RTL start — first in DOM) */}
       <div className="shrink-0 w-[45%] h-full bg-[#ececf0] rounded-l-[0] rounded-r-[12px] overflow-hidden">
         <img
           src={item.image}
           alt=""
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
           loading="lazy"
           width="352"
           height="264"
