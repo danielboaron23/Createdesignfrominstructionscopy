@@ -1,0 +1,193 @@
+export type SongClue = {
+  id: string;
+  title: string;
+  artist: string;
+  year: number;
+  hints: string[];
+  options: string[];
+  difficulty: 1 | 2 | 3;
+  genre?: string;
+};
+
+export const SONGS: SongClue[] = [
+  {
+    id: "bohemian",
+    title: "Bohemian Rhapsody",
+    artist: "Queen",
+    year: 1975,
+    difficulty: 1,
+    genre: "rock",
+    hints: [
+      "להקה בריטית מאיקונית",
+      "השיר משלב אופרה, רוק ובלדה",
+      "פרדי מרקורי הוא הסולן",
+      "מופיע באלבום A Night at the Opera",
+    ],
+    options: ["Hotel California", "Bohemian Rhapsody", "Stairway to Heaven", "Imagine"],
+  },
+  {
+    id: "imagine",
+    title: "Imagine",
+    artist: "John Lennon",
+    year: 1971,
+    difficulty: 1,
+    genre: "pop",
+    hints: [
+      "אמן בריטי בקריירת סולו",
+      "השיר מדבר על עולם ללא מלחמות",
+      "פסנתר הוא הכלי המוביל",
+      "הזמר היה חבר בביטלס",
+    ],
+    options: ["Hey Jude", "Imagine", "Yesterday", "Let It Be"],
+  },
+  {
+    id: "yihye_tov",
+    title: "יהיה טוב",
+    artist: "דוד ברוזה",
+    year: 1978,
+    difficulty: 2,
+    genre: "ישראלי",
+    hints: [
+      "שיר ישראלי קלאסי",
+      "נכתב על רקע ביקור סאדאת",
+      "המילים של יהונתן גפן",
+      "ההמנון הלא-רשמי של אופטימיות ישראלית",
+    ],
+    options: ["יהיה טוב", "אני ואתה", "שיר לשלום", "תפילה"],
+  },
+  {
+    id: "hatikva",
+    title: "התקווה",
+    artist: "נפתלי הרץ אימבר",
+    year: 1878,
+    difficulty: 1,
+    genre: "המנון",
+    hints: [
+      "ההמנון הלאומי של ישראל",
+      "המילים נכתבו לפני קום המדינה",
+      "הלחן מבוסס על מנגינה רומנית",
+      "מדבר על תקווה בת אלפיים שנה",
+    ],
+    options: ["התקווה", "ירושלים של זהב", "השיר שלי לא לי הוא", "ארץ ישראל יפה"],
+  },
+  {
+    id: "billie_jean",
+    title: "Billie Jean",
+    artist: "Michael Jackson",
+    year: 1982,
+    difficulty: 2,
+    genre: "pop",
+    hints: [
+      "אמן אמריקאי, מלך הפופ",
+      "מופיע באלבום Thriller",
+      "קליפ מפורסם עם ריצוף שמשנה צבע",
+      "בסיף ייחודי שהתחיל את השיר",
+    ],
+    options: ["Beat It", "Thriller", "Billie Jean", "Bad"],
+  },
+  {
+    id: "shape_of_you",
+    title: "Shape of You",
+    artist: "Ed Sheeran",
+    year: 2017,
+    difficulty: 1,
+    genre: "pop",
+    hints: [
+      "אמן בריטי עם שיער ג'ינג'י",
+      "השיר היה מספר 1 ברחבי העולם",
+      "השיר עם הקליפים שיא הצפיות",
+      "באלבום ÷ (Divide)",
+    ],
+    options: ["Shape of You", "Thinking Out Loud", "Perfect", "Bad Habits"],
+  },
+  {
+    id: "yerushalayim",
+    title: "ירושלים של זהב",
+    artist: "נעמי שמר",
+    year: 1967,
+    difficulty: 1,
+    genre: "ישראלי",
+    hints: [
+      "נכתב לפני מלחמת ששת הימים",
+      "ביצוע מפורסם של שולי נתן",
+      "נחשב 'המנון חלופי' של ישראל",
+      "ירושלים היא נושא השיר",
+    ],
+    options: ["יהיה טוב", "ירושלים של זהב", "שיר לשלום", "ארץ ישראל יפה"],
+  },
+  {
+    id: "rolling",
+    title: "Rolling in the Deep",
+    artist: "Adele",
+    year: 2010,
+    difficulty: 2,
+    genre: "soul",
+    hints: [
+      "אמנית בריטית עם קול עוצמתי",
+      "באלבום 21",
+      "השיר זכה בגראמי שיר השנה",
+      "מדבר על פרידה כואבת",
+    ],
+    options: ["Hello", "Rolling in the Deep", "Someone Like You", "Skyfall"],
+  },
+  {
+    id: "shir_lashalom",
+    title: "שיר לשלום",
+    artist: "מיכל לוי / הלהקה הצבאית",
+    year: 1969,
+    difficulty: 2,
+    genre: "ישראלי",
+    hints: [
+      "שיר ישראלי שהפך לסמל",
+      "הושר בעצרת בכיכר ב-1995",
+      "נכתב על ידי יעקב רוטבליט",
+      "הולחן על ידי יאיר רוזנבלום",
+    ],
+    options: ["יהיה טוב", "שיר לשלום", "התקווה", "אני ואתה"],
+  },
+  {
+    id: "smells_like",
+    title: "Smells Like Teen Spirit",
+    artist: "Nirvana",
+    year: 1991,
+    difficulty: 2,
+    genre: "grunge",
+    hints: [
+      "להקה אמריקאית, סצנת סיאטל",
+      "קורט קוביין הוא הסולן",
+      "פתח עידן הגראנג'",
+      "מופיע באלבום Nevermind",
+    ],
+    options: ["Come As You Are", "Smells Like Teen Spirit", "In Bloom", "Heart-Shaped Box"],
+  },
+  {
+    id: "stairway",
+    title: "Stairway to Heaven",
+    artist: "Led Zeppelin",
+    year: 1971,
+    difficulty: 3,
+    genre: "rock",
+    hints: [
+      "להקה בריטית, ז'אנר רוק כבד",
+      "אחד מהשירים המוכרים בהיסטוריה",
+      "מתחיל בגיטרה אקוסטית עדינה",
+      "רוברט פלאנט הוא הסולן",
+    ],
+    options: ["Black Dog", "Stairway to Heaven", "Whole Lotta Love", "Kashmir"],
+  },
+  {
+    id: "yallah_lev",
+    title: "יאללה לב",
+    artist: "סטטיק ובן אל תבורי",
+    year: 2018,
+    difficulty: 3,
+    genre: "ישראלי-פופ",
+    hints: [
+      "דואו ישראלי פופולרי",
+      "שיר קיץ שהיה להיט",
+      "ז'אנר פופ ישראלי עכשווי",
+      "השם רומז על תנועה ומרץ",
+    ],
+    options: ["טודו בום", "יאללה לב", "כפרה עלייך", "אהבה ראשונה"],
+  },
+];
